@@ -1,6 +1,12 @@
 import flatpickr from "flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
 
+import iziToast from "izitoast";
+import "izitoast/dist/css/iziToast.min.css";
+
+const iconElement = document.getElementById("#icon-Group");
+
+
 const options = {
   enableTime: true,
   time_24hr: true,
@@ -47,20 +53,35 @@ const checkingDate = (selectedDates) => {
     userSelectedDate = selectedDates[0];
     if (userSelectedDate <= options.defaultDate) {
         startButton.disabled = true;
-        alert('Please choose a date in the future');
+        iziToast.show({
+            message: 'Please choose a date in the future',
+            messageColor: 'rgba(255, 255, 255, 1)',
+            messageSize: '16px',
+            messageLineHeight: '24px',
+            backgroundColor: 'rgba(239, 64, 64, 1)',
+            position: 'topCenter',
+            icon: ''
+        });
+        // alert('Please choose a date in the future');
     } else {
         startButton.disabled = false;
     }
 };
 
 startButton.addEventListener("click", () => {
-    const startTime = options.defaultDate;
+    let startTime = options.defaultDate;
+    startButton.disabled = true;
+    datetimePicker.disabled = true;
     setInterval(() => {
+        startTime = new Date();
         const elapsedTime = convertMs(userSelectedDate - startTime);
         timerValues[0].children[0].textContent = addLeadingZero(elapsedTime.days);
         timerValues[1].children[0].textContent = addLeadingZero(elapsedTime.hours);
         timerValues[2].children[0].textContent = addLeadingZero(elapsedTime.minutes);
         timerValues[3].children[0].textContent = addLeadingZero(elapsedTime.seconds);
+        if (elapsedTime.days === 0 && elapsedTime.hours === 0 && elapsedTime.minutes === 0 && elapsedTime.seconds === 0) {
+            datetimePicker.disabled = false;
+        }
     }, 1000);
 });
 
