@@ -4,8 +4,6 @@ import "flatpickr/dist/flatpickr.min.css";
 import iziToast from "izitoast";
 import "izitoast/dist/css/iziToast.min.css";
 
-const iconElement = document.getElementById("#icon-Group");
-
 
 const options = {
   enableTime: true,
@@ -60,9 +58,8 @@ const checkingDate = (selectedDates) => {
             messageLineHeight: '24px',
             backgroundColor: 'rgba(239, 64, 64, 1)',
             position: 'topCenter',
-            icon: ''
+            timeout: 1500
         });
-        // alert('Please choose a date in the future');
     } else {
         startButton.disabled = false;
     }
