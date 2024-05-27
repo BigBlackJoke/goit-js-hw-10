@@ -5,15 +5,29 @@ import iziToast from "izitoast";
 import "izitoast/dist/css/iziToast.min.css";
 
 
-const options = {
-  enableTime: true,
-  time_24hr: true,
-  defaultDate: new Date(),
-  minuteIncrement: 1,
-  onClose(selectedDates) {
-    console.log(selectedDates[0]);
-  },
-};
+// const options = {
+//   enableTime: true,
+//   time_24hr: true,
+//   defaultDate: new Date(),
+//   minuteIncrement: 1,
+//   onClose(selectedDates) {
+//     userSelectedDate = selectedDates[0];
+//     if (userSelectedDate <= options.defaultDate) {
+//         startButton.disabled = true;
+//         iziToast.show({
+//             message: 'Please choose a date in the future',
+//             messageColor: 'rgba(255, 255, 255, 1)',
+//             messageSize: '16px',
+//             messageLineHeight: '24px',
+//             backgroundColor: 'rgba(239, 64, 64, 1)',
+//             position: 'topCenter',
+//             timeout: 1500
+//         });
+//     } else {
+//         startButton.disabled = false;
+//     }
+//   },
+// };
 
 function convertMs(ms) {
   // Number of milliseconds per unit of time
@@ -47,7 +61,12 @@ let userSelectedDate;
 const startButton = document.querySelector("button");
 startButton.disabled = true;
 
-const checkingDate = (selectedDates) => {
+const options = {
+  enableTime: true,
+  time_24hr: true,
+  defaultDate: new Date(),
+  minuteIncrement: 1,
+  onClose(selectedDates) {
     userSelectedDate = selectedDates[0];
     if (userSelectedDate <= options.defaultDate) {
         startButton.disabled = true;
@@ -63,7 +82,28 @@ const checkingDate = (selectedDates) => {
     } else {
         startButton.disabled = false;
     }
+  },
 };
+
+new flatpickr(datetimePicker, options);
+
+// const checkingDate = (selectedDates) => {
+//     userSelectedDate = selectedDates[0];
+//     if (userSelectedDate <= options.defaultDate) {
+//         startButton.disabled = true;
+//         iziToast.show({
+//             message: 'Please choose a date in the future',
+//             messageColor: 'rgba(255, 255, 255, 1)',
+//             messageSize: '16px',
+//             messageLineHeight: '24px',
+//             backgroundColor: 'rgba(239, 64, 64, 1)',
+//             position: 'topCenter',
+//             timeout: 1500
+//         });
+//     } else {
+//         startButton.disabled = false;
+//     }
+// };
 
 startButton.addEventListener("click", () => {
     let startTime = options.defaultDate;
@@ -77,9 +117,8 @@ startButton.addEventListener("click", () => {
         timerValues[2].children[0].textContent = addLeadingZero(elapsedTime.minutes);
         timerValues[3].children[0].textContent = addLeadingZero(elapsedTime.seconds);
         if (elapsedTime.days === 0 && elapsedTime.hours === 0 && elapsedTime.minutes === 0 && elapsedTime.seconds === 0) {
+            clearInterval(timerInterval);
             datetimePicker.disabled = false;
         }
     }, 1000);
 });
-
-new flatpickr(datetimePicker, { options, onClose: checkingDate });
