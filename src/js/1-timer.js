@@ -5,30 +5,6 @@ import iziToast from "izitoast";
 import "izitoast/dist/css/iziToast.min.css";
 
 
-// const options = {
-//   enableTime: true,
-//   time_24hr: true,
-//   defaultDate: new Date(),
-//   minuteIncrement: 1,
-//   onClose(selectedDates) {
-//     userSelectedDate = selectedDates[0];
-//     if (userSelectedDate <= options.defaultDate) {
-//         startButton.disabled = true;
-//         iziToast.show({
-//             message: 'Please choose a date in the future',
-//             messageColor: 'rgba(255, 255, 255, 1)',
-//             messageSize: '16px',
-//             messageLineHeight: '24px',
-//             backgroundColor: 'rgba(239, 64, 64, 1)',
-//             position: 'topCenter',
-//             timeout: 1500
-//         });
-//     } else {
-//         startButton.disabled = false;
-//     }
-//   },
-// };
-
 function convertMs(ms) {
   // Number of milliseconds per unit of time
   const second = 1000;
@@ -86,24 +62,6 @@ const options = {
 };
 
 new flatpickr(datetimePicker, options);
-
-// const checkingDate = (selectedDates) => {
-//     userSelectedDate = selectedDates[0];
-//     if (userSelectedDate <= options.defaultDate) {
-//         startButton.disabled = true;
-//         iziToast.show({
-//             message: 'Please choose a date in the future',
-//             messageColor: 'rgba(255, 255, 255, 1)',
-//             messageSize: '16px',
-//             messageLineHeight: '24px',
-//             backgroundColor: 'rgba(239, 64, 64, 1)',
-//             position: 'topCenter',
-//             timeout: 1500
-//         });
-//     } else {
-//         startButton.disabled = false;
-//     }
-// };
 
 startButton.addEventListener("click", () => {
     let startTime = options.defaultDate;
