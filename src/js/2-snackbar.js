@@ -8,31 +8,38 @@ const radioRejected = document.querySelector('input[name="state"][value="rejecte
 
 form.addEventListener("submit", event => {
     event.preventDefault();
-    const makeNewPromise = () => {
-        if (radioFulfilled.checked) {
-            Promise.resolve().then(() => {
-                iziToast.show({
-                    message: `Fulfilled promise in ${inputMs.value}ms`,
-                    position: 'topCenter',
-                    messageColor: 'rgba(255, 255, 255, 1)',
-                    messageSize: '16px',
-                    backgroundColor: 'rgba(89, 161, 13, 1)',
-                    close: false,
-                    timeout: 1500
-                })
+    const makeNewPromise = new Promise((resolve, reject) => {
+        setTimeout(() => {
+            if (radioFulfilled.checked) {
+                resolve();
+            } else if (radioRejected.checked) {
+                reject();
+            }
+        }, inputMs.value);
+    });
+    
+    makeNewPromise
+        .then(() => {
+            iziToast.show({
+                message: `Fulfilled promise in ${inputMs.value}ms`,
+                position: 'topCenter',
+                messageColor: 'rgba(255, 255, 255, 1)',
+                messageSize: '16px',
+                backgroundColor: 'rgba(89, 161, 13, 1)',
+                close: false,
+                timeout: 1500
             });
-        } else if (radioRejected.checked) {
-            Promise.reject().catch(() => iziToast.show({
-                    message: `Rejected promise in ${inputMs.value}ms`,
-                    position: 'topCenter',
-                    messageColor: 'rgba(255, 255, 255, 1)',
-                    messageSize: '16px',
-                    backgroundColor: 'rgba(181, 27, 27, 1)',
-                    close: false,
-                    timeout: 1500
-                }));
-        }
-    };
-    setTimeout(makeNewPromise, inputMs.value);
+        })
+        .catch(() => {
+            iziToast.show({
+                message: `Rejected promise in ${inputMs.value}ms`,
+                position: 'topCenter',
+                messageColor: 'rgba(255, 255, 255, 1)',
+                messageSize: '16px',
+                backgroundColor: 'rgba(181, 27, 27, 1)',
+                close: false,
+                timeout: 1500
+            });
+        });
 });
 
