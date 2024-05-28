@@ -67,14 +67,14 @@ startButton.addEventListener("click", () => {
     let startTime = options.defaultDate;
     startButton.disabled = true;
     datetimePicker.disabled = true;
-    setInterval(() => {
+    const timerInterval = setInterval(() => {
         startTime = new Date();
         const elapsedTime = convertMs(userSelectedDate - startTime);
         timerValues[0].children[0].textContent = addLeadingZero(elapsedTime.days);
         timerValues[1].children[0].textContent = addLeadingZero(elapsedTime.hours);
         timerValues[2].children[0].textContent = addLeadingZero(elapsedTime.minutes);
         timerValues[3].children[0].textContent = addLeadingZero(elapsedTime.seconds);
-        if (elapsedTime.days === 0 && elapsedTime.hours === 0 && elapsedTime.minutes === 0 && elapsedTime.seconds === 0) {
+        if (elapsedTime < 1000) {
             clearInterval(timerInterval);
             datetimePicker.disabled = false;
         }
