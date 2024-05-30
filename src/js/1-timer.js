@@ -43,8 +43,9 @@ const options = {
   defaultDate: new Date(),
   minuteIncrement: 1,
   onClose(selectedDates) {
-    userSelectedDate = selectedDates[0];
-    if (userSelectedDate <= options.defaultDate) {
+      userSelectedDate = selectedDates[0];
+      const currentDate = new Date();
+    if (userSelectedDate <= currentDate) {
         startButton.disabled = true;
         iziToast.show({
             message: 'Please choose a date in the future',
@@ -74,7 +75,7 @@ startButton.addEventListener("click", () => {
         timerValues[1].children[0].textContent = addLeadingZero(elapsedTime.hours);
         timerValues[2].children[0].textContent = addLeadingZero(elapsedTime.minutes);
         timerValues[3].children[0].textContent = addLeadingZero(elapsedTime.seconds);
-        if (elapsedTime < 1000) {
+        if (userSelectedDate.getTime() - startTime.getTime() < 1000) {
             clearInterval(timerInterval);
             datetimePicker.disabled = false;
         }
